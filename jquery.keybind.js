@@ -232,5 +232,15 @@ $.each(['keydown', 'keyup'], function() {
   $.event.special[this] = special;
 });
 
+$.fn.keybind = function(type, options) {
+  if(options === undefined) {
+    options = type;
+    type = 'keydown';
+  }
+  for(var key in options) {
+    $(this).bind(type, key, options[key]);
+  }
+};
+
 })(jQuery);
 
