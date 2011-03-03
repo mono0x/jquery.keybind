@@ -171,8 +171,7 @@ var addHandler = function(handle) {
     data = {
       tree: new KeybindTree(),
       buffer: [],
-      primaryHandle: handle,
-      secondaryHandles: []
+      handles: [ handle ]
     };
     $.data(this, dataId, data);
     data.tree.add(keys, handle.handler);
@@ -194,7 +193,7 @@ var addHandler = function(handle) {
     };
   }
   else {
-    data.secondaryHandles.push(handle);
+    data.handles.push(handle);
     data.tree.add(keys, handle.handler);
     handle.handler = $.noop;
   }
@@ -211,12 +210,10 @@ var removeHandler = function(handle) {
     var keys = Key.parse(handle.data);
     data.tree.remove(keys);
   }
-  var primary = data.primaryHandle;
-  if(handle.guid == primary.guid) {
-    if(data.secondaryHandles.length > 0) {
-      var secondary = data.secondaryHandles.pop();
-      data.primaryHandle = secondary;
-      secondary.handler = primary.handler;
+  if(handle.guid == data.handles[0].guid) {
+    var primary = data.handles.shift();
+    if(data.handles.length > 0) {
+      data.handles[0].handler = primary.handler;
     }
     else {
       $.data(this, dataId, undefined);
