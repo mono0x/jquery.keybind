@@ -155,6 +155,10 @@ Key.parse = function(keybind) {
   return $.map(keybind.split(' '), function(s) { return new Key(s); });
 };
 
+var dataId = function(handle) { 
+  return 'jquery.keybind.' + handle.type;
+};
+
 var addHandler = function(handle) {
   if(typeof(handle.data) !== 'string') {
     return;
@@ -164,8 +168,8 @@ var addHandler = function(handle) {
 
   var keys = Key.parse(handle.data);
 
-  var dataId = 'jquery.keybind.' + handle.type;
-  var data = $.data(this, dataId);
+  var id = dataId(handle);
+  var data = $.data(this, id);
 
   if(data === undefined) {
     data = {
@@ -173,7 +177,7 @@ var addHandler = function(handle) {
       buffer: [],
       handles: [ handle ]
     };
-    $.data(this, dataId, data);
+    $.data(this, id, data);
     data.tree.add(keys, handle.handler);
     handle.handler = function(e) {
       data.buffer.push(new Key(e.keyCode, e.shiftKey, e.ctrlKey, e.altKey));
@@ -204,8 +208,8 @@ var removeHandler = function(handle) {
     return;
   }
 
-  var dataId = 'jquery.keybind.' + handle.type;
-  var data = $.data(this, dataId);
+  var id = dataId(handle);
+  var data = $.data(this, id);
   if(data !== undefined) {
     var keys = Key.parse(handle.data);
     data.tree.remove(keys);
@@ -216,7 +220,7 @@ var removeHandler = function(handle) {
       data.handles[0].handler = primary.handler;
     }
     else {
-      $.data(this, dataId, undefined);
+      $.data(this, id, undefined);
     }
   }
 };
