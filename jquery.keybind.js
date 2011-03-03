@@ -167,6 +167,7 @@ var addHandler = function(handle) {
   handle.guid = handle.handler.guid;
 
   var keys = Key.parse(handle.data);
+  var element = this;
 
   var id = dataId(handle);
   var data = $.data(this, id);
@@ -187,7 +188,7 @@ var addHandler = function(handle) {
         data.buffer = [];
       }
       else if($.isFunction(currentHandler)) {
-        result = currentHandler(e);
+        result = currentHandler.call(element, e);
         data.buffer = [];
       }
       else {
