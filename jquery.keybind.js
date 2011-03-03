@@ -7,10 +7,10 @@ var count = function(obj) {
   return result;
 };
 
-function HandlerTree() {
+function KeybindTree() {
   this.root = {};
 }
-HandlerTree.prototype.add = function(keys, handler) {
+KeybindTree.prototype.add = function(keys, handler) {
   var node = this.root;
   var length = keys.length;
   $.each(keys.slice(0, length - 1), function() {
@@ -24,7 +24,7 @@ HandlerTree.prototype.add = function(keys, handler) {
   });
   node[keys[length - 1].toString()] = handler;
 };
-HandlerTree.prototype.find = function(keys) {
+KeybindTree.prototype.find = function(keys) {
   var result = true;
   var node = this.root;
   $.each(keys, function() {
@@ -46,7 +46,7 @@ HandlerTree.prototype.find = function(keys) {
   }
   return true;
 };
-HandlerTree.prototype.remove = function(keys) {
+KeybindTree.prototype.remove = function(keys) {
   var nodes = [];
   var node = this.root;
   $.each(keys, function() {
@@ -169,7 +169,7 @@ var addHandler = function(handle) {
 
   if(data === undefined) {
     data = {
-      tree: new HandlerTree(),
+      tree: new KeybindTree(),
       buffer: [],
       primaryHandle: handle,
       secondaryHandles: []
