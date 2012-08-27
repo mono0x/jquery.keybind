@@ -28,8 +28,8 @@ jQuery.Keybind is a jQuery plugin to handle multi-stroke key bindings.
 ### Multi-stroke
 
     $(window).keybind('keydown', {
-      'C-x C-c': funcion() { alert('Ctrl + X -> Ctrl + C'); },
-      'C-x C-f': funcion() { alert('Ctrl + X -> Ctrl + F'); }
+      'C-x C-c': function() { alert('Ctrl + X -> Ctrl + C'); },
+      'C-x C-f': function() { alert('Ctrl + X -> Ctrl + F'); }
     });
 
 ## License
